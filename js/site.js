@@ -8,9 +8,25 @@ function getValues() {
   startNumber = Number(startNumber);
   endNumber = Number(endNumber);
 
-  let numberArray = generateNumbers(startNumber, endNumber);
+  if (isNaN(startNumber) == true || isNaN(endNumber) == true) {
+    Swal.fire({
+      title: "Oops!",
+      text: "Hundo only works with numbers.",
+      icon: "error",
+      backdrop: false,
+    });
+  } else if (startNumber > endNumber) {
+    Swal.fire({
+      title: "Oops!",
+      text: "The starting number must be less than the ending number",
+      icon: "error",
+      backdrop: false,
+    });
+  } else {
+    let numberArray = generateNumbers(startNumber, endNumber);
 
-  displayNumbers(numberArray);
+    displayNumbers(numberArray);
+  }
 }
 
 // Business logic - creates every number in the input range
@@ -18,7 +34,7 @@ function getValues() {
 function generateNumbers(start, end) {
   let range = [];
 
-  for (let number = start; number <= end; number = number + 1) {
+  for (let number = start; number <= end; number++) {
     range.push(number);
   }
 
@@ -43,7 +59,7 @@ function displayNumbers(numbersToDisplay) {
 
     let tableRowHtml = `<tr><td class="${className}">${currentNumber} </td></tr>`;
 
-    tableHtml = tableHtml + tableRowHtml;
+    tableHtml += tableRowHtml;
   }
 
   document.getElementById("results").innerHTML = tableHtml;
